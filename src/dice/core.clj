@@ -8,6 +8,11 @@
 
 (defrecord Die [sides])
 
+(defn make-die
+  "makes an n sided die"
+  ([] nil)
+  ([n] (Die. n))) 
+
 (defn roll
   "rolls a single die, or dice"
   ([] nil)
