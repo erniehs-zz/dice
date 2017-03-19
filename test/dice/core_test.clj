@@ -32,3 +32,5 @@
     (repeatedly repeat-count (is (= (count (core/roll d4 d12)) 2)))
     (repeatedly repeat-count (is (= (count (core/roll d4 d6 d8 d12)) 4)))
     (repeatedly repeat-count (is (<= 4 (reduce + (core/roll d4 d6 d8 d12)) 30)))))
+
+

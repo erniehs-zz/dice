@@ -23,4 +23,8 @@
   ([die & more] (map roll (conj more die))))
 
 (defn discard-lowest
-  [] nil)
+  "discard the lowest value"
+  ([] nil)
+  ([r] (let [x (split-with (partial < (apply min r)) r)] 
+         (concat (first x) (drop 1 (last x))))))
+
