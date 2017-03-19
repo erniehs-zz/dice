@@ -23,5 +23,4 @@
   ([die & more] (map roll (conj more die))))
 
 (def discard-lowest
-  [] nil
-  [dice] ())
+  [] nil)
