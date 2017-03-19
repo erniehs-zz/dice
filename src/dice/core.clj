@@ -22,5 +22,5 @@
   ([die] (rolld (:sides die)))
   ([die & more] (map roll (conj more die))))
 
-(def discard-lowest
+(defn discard-lowest
   [] nil)
