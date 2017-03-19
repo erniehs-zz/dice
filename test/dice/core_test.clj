@@ -33,4 +33,11 @@
     (repeatedly repeat-count (is (= (count (core/roll d4 d6 d8 d12)) 4)))
     (repeatedly repeat-count (is (<= 4 (reduce + (core/roll d4 d6 d8 d12)) 30)))))
 
+(deftest discard-lowest-dice
+  (let [d6 (core/make-die)]
+    (is (nil? (core/discard-lowest)))
+    (is (= (frequencies `(1 2 3)) (frequencies (core/discard-lowest `(0 1 2 3)))))
+    (is (= (frequencies `(5 5 1 1 3 9 10)) (frequencies (core/discard-lowest `(5 5 1 0 1 3 10 9)))))
+    (is (= 3 (count (core/discard-lowest (core/roll d6 d6 d6 d6)))))))
+  
 
