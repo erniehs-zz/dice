@@ -2,14 +2,15 @@
   (:use clojure.test)
   (:require [dice.core :as core]))
 
-(def repeat-count 30)
+(def ^:private repeat-count 30)
 
 (deftest rolld-n
-  (is (nil? (core/rolld)))
-  (is (nil? (core/rolld nil)))
-  (is (= (core/rolld 0) 0))
-  (is (= (core/rolld 1) 1))
-  (repeatedly repeat-count (is (<= 1 (core/rolld 10) 10))))
+  (let [rolld #'core/rolld]
+     (is (nil? (rolld)))
+     (is (nil? (rolld nil)))
+     (is (= (rolld 0) 0))
+     (is (= (rolld 1) 1))
+     (repeatedly repeat-count #(is (<= 1 (rolld 10) 10)))))
 
 (deftest create-die
   (is (= 6 (:sides (core/make-die))))
@@ -21,7 +22,7 @@
 
 (deftest roll-die
   (let [d8 (core/make-die 8)] 
-    (repeatedly repeat-count (is (<= 1 (core/roll d8) 8)))))
+    (repeatedly repeat-count #(is (<= 1 (core/roll d8) 8)))))
 
 (deftest roll-dice
   (let [d4 (core/make-die 4)
@@ -29,9 +30,14 @@
         d8 (core/make-die 8) 
         d12 (core/make-die 12)]
     (is (nil? (core/roll)))
-    (repeatedly repeat-count (is (= (count (core/roll d4 d12)) 2)))
-    (repeatedly repeat-count (is (= (count (core/roll d4 d6 d8 d12)) 4)))
-    (repeatedly repeat-count (is (<= 4 (reduce + (core/roll d4 d6 d8 d12)) 30)))))
+    (repeatedly repeat-count #(is (= (count (core/roll d4 d12)) 2)))
+    (repeatedly repeat-count #(is (= (count (core/roll d4 d6 d8 d12)) 4)))
+    (repeatedly repeat-count #(is (<= 4 (reduce + (core/roll d4 d6 d8 d12)) 30)))))
+
+(deftest rolln-dice
+  (let [d6 (core/make-die)]
+    (is (nil? (core/rolln)))
+    (repeatedly repeat-count #(is (= (count (core/rolln 5 d6)) 5)))))
 
 (deftest discard-lowest-dice
   (let [d6 (core/make-die)]
