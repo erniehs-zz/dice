@@ -25,7 +25,7 @@
   ([n die] (if (> n 1) (repeatedly n #(rolld (:sides die))) nil)))
 
 (defn discard-lowest
-  "discard the lowest value"
+  "discard the lowest value!"
   ([] nil)
   ([r] (let [x (split-with (partial < (apply min r)) r)] 
          (concat (first x) (drop 1 (last x))))))
